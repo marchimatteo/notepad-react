@@ -1,5 +1,28 @@
 # REACT NOTEPAD
 
+## Basics
+
+React is made of 2 packages, *react* which has the logic to crate components, and *react dom* which is in charge of rendering those components to the real DOM.
+
+### Babel
+
+Preprocessor which compile **jsx** code into regular html/javascript.
+
+### A basic component
+
+Components should return the html/javascript (or jsx code if using Babel) of the component.
+
+```jsx
+function Person() {
+    return (
+        <div class ="person">
+            <h1>Matteo</h1>
+            <p>Anni: 33</p>
+        </div>
+    );
+}
+```
+
 ## Styling
 
 If you are using inline styles, an easy way to dynamically change the style is to dynamically assign classes to html elements.  
@@ -125,7 +148,7 @@ To use them you have to tweak the project configuration, this is the procedure i
 npm run eject
 ```
 This will unlock and spawn the configuration files for us to change. In `webpack.config` (both prod and dev versions) edit this section:
-```    
+```javascript
 //...        
 test: /\.css$/,
 use: [
