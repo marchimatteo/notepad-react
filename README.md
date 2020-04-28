@@ -4,24 +4,101 @@
 
 React is made of 2 packages, *react* which has the logic to crate components, and *react dom* which is in charge of rendering those components to the real DOM.
 
-### Babel
+### Projects workflow
 
-Preprocessor which compile **jsx** code into regular html/javascript.
+In order to write and manage efficiently your code generally you'll need more than just React.
+- Dependency Management tool - **npm** or **yarn**
+- Bundler: group different imports in a single file and can also do other work during the build process - **Webpack**
+- Compiler: translate **jsx** into javascript and code written using last generation javascript into older versions of javascript - **Babel**
 
-### A basic component
+When creating a new project it's recommended doing so using a tool called **create-react-app**.
 
-Components should return the html/javascript (or jsx code if using Babel) of the component.
+### Folder structure
 
+- **package.json** - list of dependencies and command line scripts
+- **node_modules/** - actual dependencies files, generated automatically
+- **public/** - root folder served by the webserver
+- **public/index.html** - in a Single Page Application it will be the only html file actually present
+- **src/** - script files folder
+- **src/index.js** - in a SPA it will wire the main component to the root element defined in the public/index.html file
+
+### JSX
+
+It allows us to write more readable code, without it we would have to build and compose elements manually using `React.createElement()`.
+
+This javascript
+```javascript
+React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Ciao'));
+```
+can be written like this in jsx
 ```jsx
-function Person() {
+<div className="App">
+    <h1>Ciao</h1>
+</div> 
+```
+
+Then it will require a compiler like **Babel** in order to be translated in javascript.
+
+A few additional notes:
+- the elements are not *html* even if they look a lot like it, they are provided by React
+- *class* is a reserved word so React provide *className* to use instead
+- the jsx code must be written inside a single root element you return (like a *div*)
+
+## Components
+
+Components should return the html/javascript (or jsx code if using Babel) of the component, in case of *class components* this will come from the render() method.
+
+### Basic usage
+
+```html
+<div id="p1"></div>
+```
+```jsx
+function Person(props) {
     return (
-        <div class ="person">
-            <h1>Matteo</h1>
-            <p>Anni: 33</p>
+        <div className="person">
+            <h1>{props.name}</h1>
+            <p>Anni: {props.age}</p>
         </div>
     );
 }
+
+ReactDOM.render(<Person name="Max" age="28" />, document.querySelector('#p1'));
 ```
+
+### Class components
+
+The most common way to define a component.
+
+```jsx
+import React, { Component } from 'react';
+
+class App extends Component {
+    render() {
+        return (
+            <div className="App">
+                <h1>Ciao</h1>
+            </div>
+        );   
+    }
+}
+
+export default App;
+```
+
+### Functional components
+
+```jsx
+// Person.js
+import React from 'react';
+
+const person = () => {
+    return <p>Ciao</p>
+}
+
+export default person;
+```
+When we'll use it we'll need to be import it using a capital name `import Person from 'Person';`
 
 ## Styling
 
@@ -37,7 +114,7 @@ if (true) {
 }
 
 return (
-    <p classname={classes.join(' ')}>bla bla</p>
+    <p className={classes.join(' ')}>bla bla</p>
 )
 ```
 
