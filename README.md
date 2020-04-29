@@ -100,6 +100,69 @@ export default person;
 ```
 When we'll use it we'll need to be import it using a capital name `import Person from 'Person';`
 
+### Props
+
+Values you pass to your components.
+```jsx
+// App.js
+//...
+import Person from 'Person';
+
+class App extends Component {
+    render() {
+        return (
+            <div className="App">
+                <Person name="Pippo" age="33">Eheh</Person>
+            </div>
+        );
+    }
+}
+
+export default App;
+```
+```jsx
+// Person.js
+import React from 'react';
+
+const person = (props) => {
+    return (
+        <div>
+            <p>Ciao {props.name} hai {props.age} anni</p>
+            <p>{props.children}</p>
+        </div>
+    )
+};
+
+export default person;
+```
+Please note in case of class-based components you access props with `this.props`
+
+## State
+
+The default way is to use the state property inside a class component (important, this only works for components extending 'Component').
+
+To update a state use the built in method `setState()`
+```jsx
+//...
+class App extends Component {
+    state = {
+        persons: [
+            { name: 'Pippo', age: 33},
+            { name: 'Pluto', age: 34}
+        ]
+    }
+    
+    switchNameHandler = () => {
+        this.setState({
+            persons: [
+                { name: 'Bah', age: 30},
+                { name: 'Mah', age: 1}
+            ]
+        })
+    }
+//...
+```
+
 ## Styling
 
 If you are using inline styles, an easy way to dynamically change the style is to dynamically assign classes to html elements.  
