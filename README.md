@@ -200,8 +200,10 @@ const App = props => {
 
 ## Styling
 
-If you are using inline styles, an easy way to dynamically change the style is to dynamically assign classes to html elements.  
-In this example the css styling for the classes *red* and *bold* ar defined in the global css file.
+The easier way to apply styles is to do it globally, this is done through CSS files as normal.
+
+If you need to dynamically change the style you can dynamically assign classes to html elements.  
+In this example the css styling for the classes *red* and *bold* are defined in the global css file.
 ```jsx
 const classes = [];
 if (true) {
@@ -216,11 +218,31 @@ return (
 )
 ```
 
+### In line
+
+Easy but you can't use **pseudo selectors**.
+```jsx
+//...
+class App extends Component {
+    render () {
+        const style = {
+            backgroundColor: 'white',
+            border: '1px solid blue'
+        };
+
+        return (
+            <div className="App">
+                <p style={style}>Ciao</p>
+            </div>    
+        )
+    }
+}
+//...
+```
+
 ### Radium (library)
 
-A disadvantage of using in line styles is the lack of **pseudo selectors**.
-
-To fix this we can use a tool called **radium** (install with `npm install --save radium`).
+If you need both in-line styles and **pseudo selectors** you can use a tool called **radium** (install with `npm install --save radium`).
 
 To use it simply import it and then call it as an high order function while exporting a class component or a function component:
 ```jsx
