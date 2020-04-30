@@ -139,28 +139,63 @@ Please note in case of class-based components you access props with `this.props`
 
 ## State
 
-The default way is to use the state property inside a class component (important, this only works for components extending 'Component').
+### Inside a class component
 
-To update a state use the built in method `setState()`
+To update a state use the built in method `setState()`, do not change the *state* property directly.
+With class components the object you pass to setState() merge the new object with the old one, this means it doesn't delete elements present in the previous state, but missing in the new one.
 ```jsx
 //...
 class App extends Component {
     state = {
         persons: [
-            { name: 'Pippo', age: 33},
-            { name: 'Pluto', age: 34}
-        ]
+            { name: 'Pippo', age: 33 },
+            { name: 'Pluto', age: 34 }
+        ],
+        otherState: 'blabla'
     }
     
     switchNameHandler = () => {
         this.setState({
             persons: [
-                { name: 'Bah', age: 30},
-                { name: 'Mah', age: 1}
+                { name: 'Bah', age: 30 },
+                { name: 'Mah', age: 1 }
             ]
         })
     }
 //...
+```
+
+### Inside a functional component
+
+In this case we must use the `useState()` hook, this return an array of 2 elements:
+1. The current state
+2. A function that allows us to update the state
+
+Unlike class components, with functional components the object you pass to useState() **doesn't merge** with the existing one, but it completely overwrites it.
+
+Because of this we have to use multiple useState(), unless we want to manually merge the previous state every time we update it.
+```jsx
+import React, { useState } from 'react';
+
+const App = props => {
+    const [personState, setPersonState] = useState({
+        persons: [
+            { name: 'Pippo', age: 33 },
+            { name: 'Pluto', age: 34 }
+        ]
+    });
+    const [otherState, setOtherState] = useState('blabla');
+
+    const switchNameHandler = () => {
+        setPersonState({
+            persons: [
+                { name: 'Bah', age: 30 },
+                { name: 'Mah', age: 1 }
+            ]
+        })
+    };
+    //...
+}
 ```
 
 ## Styling
